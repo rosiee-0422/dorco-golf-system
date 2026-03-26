@@ -543,7 +543,7 @@ is_closed     = datetime.now() > deadline_dt
 st.markdown(f"""
 <div class="golf-hero">
     <div class="eyebrow">Rounding Application</div>
-    <h1>{current_month} 라운딩<br>신청 컨시어지</h1>
+    <h1>Dorco 라운딩<br>신청 컨시어지</h1>
     <p class="sub">Golf Schedule Reservation System</p>
 </div>
 """, unsafe_allow_html=True)
