@@ -119,7 +119,10 @@ def get_deadline() -> datetime:
 def update_deadline(new_date, new_time):
     new_dt = datetime.combine(new_date, new_time)
     sb = get_supabase()
-    sb.table("settings").upsert({"key": "deadline", "value": new_dt.strftime("%Y-%m-%d %H:%M:%S")}).execute()
+    sb.table("settings").upsert(
+        {"key": "deadline", "value": new_dt.strftime("%Y-%m-%d %H:%M:%S")},
+        on_conflict="key"
+    ).execute()
     return new_dt
 
 def load_submissions() -> pd.DataFrame:
