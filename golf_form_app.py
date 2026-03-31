@@ -239,10 +239,11 @@ with st.form("application_form"):
     c1, c2, c3 = st.columns(3)
     with c1:
         rank1 = st.selectbox("1순위", [blank_option] + all_options, disabled=is_closed)
+    skip_option = "— 선택 안함 —"
     with c2:
-        rank2 = st.selectbox("2순위", [blank_option] + [o for o in all_options if o != rank1], disabled=is_closed)
+        rank2 = st.selectbox("2순위 (선택)", [skip_option] + [o for o in all_options if o != rank1], disabled=is_closed)
     with c3:
-        rank3 = st.selectbox("3순위", [blank_option] + [o for o in all_options if o not in [rank1, rank2]], disabled=is_closed)
+        rank3 = st.selectbox("3순위 (선택)", [skip_option] + [o for o in all_options if o not in [rank1, rank2]], disabled=is_closed)
 
     submitted = st.form_submit_button("신청서 제출하기", use_container_width=True, disabled=is_closed)
     if submitted:
@@ -250,17 +251,18 @@ with st.form("application_form"):
         errors = []
         if not clean_name:
             errors.append("신청자 성함을 입력해 주세요.")
-        if blank_option in [rank1, rank2, rank3]:
-            errors.append("1순위부터 3순위까지 모두 선택해 주세요.")
+        if rank1 == blank_option:
+            errors.append("1순위는 반드시 선택해 주세요.")
         if errors:
             for e in errors: st.error(e)
         else:
             label_to_row = {r["option_label"]: r.to_dict() for _, r in published_df.iterrows()}
-            selected_rows = [
-                {"priority":"1순위", **label_to_row[rank1]},
-                {"priority":"2순위", **label_to_row[rank2]},
-                {"priority":"3순위", **label_to_row[rank3]},
-            ]
+            selected_rows = [{"priority":"1순위", **label_to_row[rank1]}]
+            if rank2 != skip_option:
+                selected_rows.append({"priority":"2순위", **label_to_row[rank2]})  
+            if rank3 != skip_option:
+                selected_rows.append({"priority":"3순위", **label_to_row[rank3]})
+    
             delete_existing_submission(clean_name, current_month)
             save_submission(clean_name, current_month, selected_rows)
             st.success(f"🎊 **{clean_name}**님, 신청이 완료되었습니다. 결과를 기다려 주세요!")
