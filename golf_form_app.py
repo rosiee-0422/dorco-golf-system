@@ -135,7 +135,13 @@ def load_submissions() -> pd.DataFrame:
 def save_submission(name: str, month: str, selected_rows: list):
     sb = get_supabase()
     submitted_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    rows = [{"submitted_at": submitted_at, "month": month, "name": name, **item} for item in selected_rows]
+    rows = []
+    for item in selected_rows:
+        clean = {k: v for k, v in item.items() if k in ["priority","date","time","golf_club","course"]}
+        clean["submitted_at"] = submitted_at
+        clean["month"] = month
+        clean["name"] = name
+        rows.append(clean)
     sb.table("submissions").insert(rows).execute()
 
 def delete_existing_submission(name: str, month: str):
