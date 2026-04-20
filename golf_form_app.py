@@ -190,7 +190,7 @@ full_schedule_df = load_schedule()
 published_df     = full_schedule_df[full_schedule_df["status"] == "published"].reset_index(drop=True)
 current_month    = published_df["month"].iloc[0] if not published_df.empty else "이번 달"
 deadline_dt      = get_deadline()
-is_closed        = datetime.now() > deadline_dt
+is_closed        = datetime.now() > deadline_dt.replace(tzinfo=None)
 
 st.markdown("""
 <div class="golf-hero">
