@@ -114,7 +114,9 @@ def get_deadline() -> datetime:
     res = sb.table("settings").select("value").eq("key", "deadline").execute()
     if not res.data:
         return datetime(2026, 12, 31, 23, 59, 59)
-    return pd.to_datetime(res.data[0]["value"])
+    val = res.data[0]["value"]
+    dt = pd.to_datetime(val).to_pydatetime()
+    return dt.replace(tzinfo=None)
 
 def update_deadline(new_date, new_time):
     new_dt = datetime.combine(new_date, new_time)
