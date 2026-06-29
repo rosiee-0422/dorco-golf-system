@@ -621,8 +621,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="form-card">', unsafe_allow_html=True)
-
 name = st.text_input("신청자 성함", placeholder="본명을 입력해 주세요", disabled=is_closed)
 
 if name.strip():
