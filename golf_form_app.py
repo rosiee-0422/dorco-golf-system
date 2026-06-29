@@ -29,51 +29,421 @@ def get_supabase() -> Client:
     )
 
 # ═══════════════════════════════════════════
-# 3. CSS
+# 3. CSS — 소프트 파스텔 · 카드형 리디자인
 # ═══════════════════════════════════════════
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400&display=swap');
-:root{--bg:#f7f5f0;--surface:#fff;--green-d:#1a3228;--green-m:#2d5040;--gold:#b8963e;--gold-l:#d4af6a;--text:#1a1a18;--sub:#6b6b60;--hint:#a8a89a;--border:#e4e0d8;--danger:#8c3030;--success:#2d5040;}
-*,*::before,*::after{box-sizing:border-box;}
-html,body,[data-testid="stApp"],.stApp{font-family:'DM Sans',sans-serif!important;background:var(--bg)!important;color:var(--text)!important;}
-header[data-testid="stHeader"],div[data-testid="stDecoration"],div[data-testid="stToolbar"]{display:none!important;}
-.block-container{padding-top:2rem!important;padding-bottom:4rem!important;max-width:720px!important;}
-.golf-hero{background:var(--green-d);border-radius:20px;padding:44px 40px 36px;margin-bottom:32px;position:relative;overflow:hidden;}
-.golf-hero::before{content:'⛳';position:absolute;right:32px;top:50%;transform:translateY(-50%);font-size:72px;opacity:.12;line-height:1;}
-.golf-hero .eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-l);margin-bottom:10px;}
-.golf-hero h1{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:#fff;margin:0 0 6px;letter-spacing:-.01em;line-height:1.15;}
-.golf-hero .sub{font-size:13px;color:rgba(255,255,255,.45);margin:0;font-weight:300;}
-.deadline-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 28px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-.deadline-card .dl-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--hint);margin-bottom:4px;}
-.deadline-card .dl-date{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--text);letter-spacing:-.01em;}
-.deadline-card .dl-badge-open{background:rgba(45,80,64,.1);color:var(--green-m);border:1px solid rgba(45,80,64,.2);font-size:12px;font-weight:600;padding:6px 16px;border-radius:100px;white-space:nowrap;}
-.deadline-card .dl-badge-closed{background:rgba(140,48,48,.08);color:var(--danger);border:1px solid rgba(140,48,48,.2);font-size:12px;font-weight:600;padding:6px 16px;border-radius:100px;white-space:nowrap;}
-.sec-heading{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--text);letter-spacing:-.01em;margin:36px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-.sec-heading span{font-family:'DM Mono',monospace;font-size:11px;font-weight:400;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;vertical-align:middle;margin-right:10px;}
-.closed-banner{background:rgba(140,48,48,.07);border:1px solid rgba(140,48,48,.18);border-radius:12px;padding:14px 20px;color:var(--danger);font-size:13px;font-weight:500;margin-bottom:20px;}
-[data-testid="stTextInput"] input,[data-testid="stSelectbox"] div[data-baseweb="select"]>div,[data-testid="stDateInput"] input,[data-testid="stTextArea"] textarea{background:var(--surface)!important;border:1px solid var(--border)!important;border-radius:10px!important;color:var(--text)!important;font-family:'DM Sans',sans-serif!important;font-size:14px!important;}
-[data-testid="stTextInput"] label,[data-testid="stSelectbox"] label,[data-testid="stDateInput"] label{font-size:12px!important;font-weight:600!important;letter-spacing:.05em!important;text-transform:uppercase!important;color:var(--sub)!important;}
-.stButton>button{border-radius:10px!important;font-family:'DM Sans',sans-serif!important;font-weight:500!important;font-size:14px!important;border:1px solid var(--border)!important;background:var(--surface)!important;color:var(--sub)!important;height:40px!important;}
-.stButton>button:hover{border-color:var(--green-m)!important;color:var(--green-m)!important;}
-[data-testid="stFormSubmitButton"] button{background:var(--green-d)!important;border:none!important;color:#fff!important;font-weight:600!important;height:48px!important;}
-[data-testid="stFormSubmitButton"] button:hover{background:var(--green-m)!important;transform:translateY(-1px)!important;}
-[data-testid="stSuccess"]{background:rgba(45,80,64,.07)!important;border:1px solid rgba(45,80,64,.2)!important;border-radius:10px!important;color:var(--success)!important;}
-[data-testid="stError"]{background:rgba(140,48,48,.07)!important;border:1px solid rgba(140,48,48,.2)!important;border-radius:10px!important;color:var(--danger)!important;}
-[data-testid="stWarning"]{background:rgba(184,150,62,.08)!important;border:1px solid rgba(184,150,62,.22)!important;border-radius:10px!important;color:#7a6020!important;}
-[data-testid="stInfo"]{background:rgba(26,50,40,.05)!important;border:1px solid rgba(26,50,40,.12)!important;border-radius:10px!important;color:var(--green-d)!important;}
-[data-testid="stDataFrame"]{border:1px solid var(--border)!important;border-radius:12px!important;overflow:hidden!important;}
-[data-testid="stDataFrame"] th{background:var(--bg)!important;color:var(--hint)!important;font-size:10px!important;font-weight:600!important;letter-spacing:.1em!important;text-transform:uppercase!important;border-bottom:1px solid var(--border)!important;}
-[data-testid="stDataFrame"] td{color:var(--text)!important;font-size:13px!important;border-bottom:1px solid var(--border)!important;}
-[data-testid="stTabs"] [role="tablist"]{background:var(--bg)!important;border-radius:10px!important;padding:4px!important;border:1px solid var(--border)!important;}
-[data-testid="stTabs"] [role="tab"]{border-radius:8px!important;font-size:13px!important;font-weight:500!important;color:var(--sub)!important;border:none!important;background:transparent!important;padding:6px 16px!important;}
-[data-testid="stTabs"] [role="tab"][aria-selected="true"]{background:var(--surface)!important;color:var(--green-d)!important;box-shadow:0 1px 4px rgba(0,0,0,.08)!important;}
-[data-testid="stExpander"]{border:1px solid var(--border)!important;border-radius:14px!important;background:var(--surface)!important;overflow:hidden!important;margin-top:48px!important;}
-[data-testid="stExpander"] summary{font-size:13px!important;font-weight:500!important;color:var(--hint)!important;padding:14px 20px!important;}
-[data-testid="stCheckbox"] label{color:var(--sub)!important;font-size:13px!important;}
-[data-testid="stDownloadButton"] button{background:var(--bg)!important;border:1px solid var(--border)!important;color:var(--sub)!important;border-radius:10px!important;font-size:13px!important;height:40px!important;}
-[data-testid="stDownloadButton"] button:hover{border-color:var(--gold)!important;color:var(--gold)!important;}
-hr,[data-testid="stDivider"]{border-color:var(--border)!important;margin:28px 0!important;}
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+:root {
+  --bg:        #f0f4f0;
+  --surface:   #ffffff;
+  --surface2:  #f7faf7;
+  --green:     #5a8a6a;
+  --green-d:   #3d6b50;
+  --green-l:   #e8f2ec;
+  --mint:      #a8d5ba;
+  --sage:      #c5dbc9;
+  --peach:     #f5c6a0;
+  --peach-l:   #fef0e6;
+  --yellow:    #f7e07a;
+  --yellow-l:  #fdf8dc;
+  --text:      #2c3e35;
+  --sub:       #6b7f72;
+  --hint:      #a0b0a5;
+  --border:    #dceadf;
+  --shadow:    0 2px 16px rgba(90,138,106,.10);
+  --shadow-md: 0 6px 28px rgba(90,138,106,.14);
+  --danger:    #c0615a;
+  --danger-l:  #fdecea;
+  --success:   #4a8c62;
+  --success-l: #e8f4ed;
+  --radius:    18px;
+  --radius-sm: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, [data-testid="stApp"], .stApp {
+  font-family: 'Noto Sans KR', 'Nunito', sans-serif !important;
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+header[data-testid="stHeader"],
+div[data-testid="stDecoration"],
+div[data-testid="stToolbar"] { display: none !important; }
+
+.block-container {
+  padding-top: 2rem !important;
+  padding-bottom: 4rem !important;
+  max-width: 740px !important;
+}
+
+/* ── 히어로 카드 ── */
+.golf-hero {
+  background: linear-gradient(135deg, #5a8a6a 0%, #3d6b50 60%, #2d5540 100%);
+  border-radius: var(--radius);
+  padding: 40px 36px 34px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.golf-hero::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.golf-hero::after {
+  content: '⛳';
+  position: absolute;
+  right: 28px; bottom: 18px;
+  font-size: 56px;
+  opacity: .18;
+  line-height: 1;
+}
+.golf-hero .eyebrow {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  border-radius: 100px;
+  padding: 4px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.85);
+  margin-bottom: 14px;
+}
+.golf-hero h1 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 8px;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+.golf-hero .sub {
+  font-size: 13px;
+  color: rgba(255,255,255,.5);
+  margin: 0;
+  font-weight: 300;
+}
+
+/* ── 마감 카드 ── */
+.deadline-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 28px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: var(--shadow);
+}
+.deadline-card .dl-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--hint);
+  margin-bottom: 6px;
+}
+.deadline-card .dl-date {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.01em;
+}
+.badge-open {
+  background: var(--green-l);
+  color: var(--green-d);
+  border: 1.5px solid var(--mint);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 18px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.badge-closed {
+  background: var(--danger-l);
+  color: var(--danger);
+  border: 1.5px solid #f0b8b4;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 18px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+/* ── 섹션 헤딩 ── */
+.sec-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 32px 0 16px;
+}
+.sec-heading .chip {
+  background: var(--green-l);
+  color: var(--green-d);
+  border-radius: 100px;
+  padding: 3px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+.sec-heading .label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -.01em;
+}
+
+/* ── 일정 카드 그리드 ── */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.sched-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  transition: transform .15s, box-shadow .15s;
+}
+.sched-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.sched-card .sc-date {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--green-d);
+  margin-bottom: 4px;
+}
+.sched-card .sc-time {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sub);
+  margin-bottom: 8px;
+}
+.sched-card .sc-club {
+  display: inline-block;
+  background: var(--yellow-l);
+  color: #7a6820;
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.sched-card .sc-course {
+  font-size: 12px;
+  color: var(--hint);
+  margin-top: 2px;
+}
+
+/* ── 폼 카드 래퍼 ── */
+.form-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 28px 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 8px;
+}
+
+/* ── 닫힌 배너 ── */
+.closed-banner {
+  background: var(--danger-l);
+  border: 1.5px solid #f0b8b4;
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  color: var(--danger);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* ── Streamlit 위젯 오버라이드 ── */
+[data-testid="stTextInput"] input,
+[data-testid="stSelectbox"] div[data-baseweb="select"] > div,
+[data-testid="stDateInput"] input,
+[data-testid="stTextArea"] textarea {
+  background: var(--surface2) !important;
+  border: 1.5px solid var(--border) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+  font-family: 'Noto Sans KR', sans-serif !important;
+  font-size: 14px !important;
+}
+[data-testid="stTextInput"] input:focus,
+[data-testid="stSelectbox"] div[data-baseweb="select"] > div:focus {
+  border-color: var(--mint) !important;
+  box-shadow: 0 0 0 3px rgba(168,213,186,.25) !important;
+}
+[data-testid="stTextInput"] label,
+[data-testid="stSelectbox"] label,
+[data-testid="stDateInput"] label {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em !important;
+  text-transform: uppercase !important;
+  color: var(--sub) !important;
+}
+
+/* ── 버튼 ── */
+.stButton > button {
+  border-radius: 10px !important;
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  border: 1.5px solid var(--border) !important;
+  background: var(--surface2) !important;
+  color: var(--sub) !important;
+  height: 40px !important;
+  transition: all .15s !important;
+}
+.stButton > button:hover {
+  border-color: var(--mint) !important;
+  color: var(--green-d) !important;
+  background: var(--green-l) !important;
+}
+[data-testid="stFormSubmitButton"] button {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-d) 100%) !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  height: 52px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 16px rgba(90,138,106,.30) !important;
+  transition: all .15s !important;
+}
+[data-testid="stFormSubmitButton"] button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(90,138,106,.38) !important;
+}
+
+/* ── 알림 ── */
+[data-testid="stSuccess"] {
+  background: var(--success-l) !important;
+  border: 1.5px solid var(--mint) !important;
+  border-radius: 12px !important;
+  color: var(--success) !important;
+}
+[data-testid="stError"] {
+  background: var(--danger-l) !important;
+  border: 1.5px solid #f0b8b4 !important;
+  border-radius: 12px !important;
+  color: var(--danger) !important;
+}
+[data-testid="stWarning"] {
+  background: var(--yellow-l) !important;
+  border: 1.5px solid #e8d060 !important;
+  border-radius: 12px !important;
+  color: #7a6820 !important;
+}
+[data-testid="stInfo"] {
+  background: var(--green-l) !important;
+  border: 1.5px solid var(--sage) !important;
+  border-radius: 12px !important;
+  color: var(--green-d) !important;
+}
+
+/* ── 데이터프레임 ── */
+[data-testid="stDataFrame"] {
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  overflow: hidden !important;
+  box-shadow: var(--shadow) !important;
+}
+[data-testid="stDataFrame"] th {
+  background: var(--green-l) !important;
+  color: var(--green-d) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase !important;
+}
+[data-testid="stDataFrame"] td {
+  color: var(--text) !important;
+  font-size: 13px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* ── 탭 ── */
+[data-testid="stTabs"] [role="tablist"] {
+  background: var(--surface) !important;
+  border-radius: 12px !important;
+  padding: 4px !important;
+  border: 1.5px solid var(--border) !important;
+  gap: 2px !important;
+}
+[data-testid="stTabs"] [role="tab"] {
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--sub) !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 7px 16px !important;
+  transition: all .12s !important;
+}
+[data-testid="stTabs"] [role="tab"][aria-selected="true"] {
+  background: var(--green-l) !important;
+  color: var(--green-d) !important;
+  box-shadow: 0 1px 6px rgba(90,138,106,.15) !important;
+}
+
+/* ── 익스팬더 (관리자) ── */
+[data-testid="stExpander"] {
+  border: 1.5px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  background: var(--surface) !important;
+  overflow: hidden !important;
+  margin-top: 48px !important;
+  box-shadow: var(--shadow) !important;
+}
+[data-testid="stExpander"] summary {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--hint) !important;
+  padding: 14px 20px !important;
+}
+
+/* ── 체크박스, 다운로드 버튼 ── */
+[data-testid="stCheckbox"] label { color: var(--sub) !important; font-size: 13px !important; }
+[data-testid="stDownloadButton"] button {
+  background: var(--green-l) !important;
+  border: 1.5px solid var(--mint) !important;
+  color: var(--green-d) !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  height: 40px !important;
+}
+[data-testid="stDownloadButton"] button:hover {
+  background: var(--mint) !important;
+  color: #fff !important;
+}
+
+hr, [data-testid="stDivider"] {
+  border-color: var(--border) !important;
+  margin: 24px 0 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -194,42 +564,65 @@ current_month    = published_df["month"].iloc[0] if not published_df.empty else 
 deadline_dt      = get_deadline()
 is_closed        = datetime.now() > deadline_dt.replace(tzinfo=None)
 
+# ── 히어로 ──
 st.markdown("""
 <div class="golf-hero">
-    <div class="eyebrow">Rounding Application</div>
-    <h1>Dorco 라운딩<br>신청 컨시어지</h1>
-    <p class="sub">Golf Schedule Reservation System</p>
+  <div class="eyebrow">Rounding Application</div>
+  <h1>라운딩 신청<br>컨시어지 🌿</h1>
+  <p class="sub">Golf Schedule Reservation · Dorco</p>
 </div>
 """, unsafe_allow_html=True)
 
+# ── 마감 카드 ──
 dl_str    = deadline_dt.strftime("%Y년 %m월 %d일")
-badge_cls = "dl-badge-closed" if is_closed else "dl-badge-open"
-badge_txt = "신청 마감" if is_closed else "신청 가능"
+badge_cls = "badge-closed" if is_closed else "badge-open"
+badge_txt = "⏰ 신청 마감" if is_closed else "✅ 신청 가능"
 st.markdown(f"""
 <div class="deadline-card">
-    <div><div class="dl-label">신청 마감 일시</div><div class="dl-date">{dl_str}</div></div>
-    <div class="{badge_cls}">{badge_txt}</div>
+  <div>
+    <div class="dl-label">신청 마감 일시</div>
+    <div class="dl-date">{dl_str}</div>
+  </div>
+  <div class="{badge_cls}">{badge_txt}</div>
 </div>
 """, unsafe_allow_html=True)
 
 if is_closed:
     st.markdown('<div class="closed-banner">⏳ 신청 기간이 종료되었습니다. 신규 신청 및 수정이 불가합니다.</div>', unsafe_allow_html=True)
 
-st.markdown('<p class="sec-heading"><span>01</span>라운딩 일정</p>', unsafe_allow_html=True)
+# ── 섹션 01: 라운딩 일정 (카드 그리드) ──
+st.markdown("""
+<div class="sec-heading">
+  <span class="chip">01</span>
+  <span class="label">이번 달 라운딩 일정</span>
+</div>
+""", unsafe_allow_html=True)
+
 if published_df.empty:
     st.info("현재 공개된 라운딩 일정이 없습니다.")
 else:
-    disp = published_df[["date","time","golf_club","course"]].copy()
-    disp.columns = ["날짜","시간","골프장","코스"]
-    st.dataframe(disp, use_container_width=True, hide_index=True,
-        column_config={
-            "날짜":  st.column_config.TextColumn("날짜",   width="small"),
-            "시간":  st.column_config.TextColumn("시간",   width="small"),
-            "골프장":st.column_config.TextColumn("골프장", width="medium"),
-            "코스":  st.column_config.TextColumn("코스",   width="medium"),
-        })
+    cards_html = '<div class="schedule-grid">'
+    for _, row in published_df.iterrows():
+        cards_html += f"""
+        <div class="sched-card">
+          <div class="sc-date">📅 {row['date']}</div>
+          <div class="sc-time">🕐 {row['time']}</div>
+          <div class="sc-club">{row['golf_club']}</div>
+          <div class="sc-course">{row['course']}</div>
+        </div>"""
+    cards_html += '</div>'
+    st.markdown(cards_html, unsafe_allow_html=True)
 
-st.markdown('<p class="sec-heading"><span>02</span>신청서 작성</p>', unsafe_allow_html=True)
+# ── 섹션 02: 신청서 작성 ──
+st.markdown("""
+<div class="sec-heading">
+  <span class="chip">02</span>
+  <span class="label">신청서 작성</span>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<div class="form-card">', unsafe_allow_html=True)
+
 name = st.text_input("신청자 성함", placeholder="본명을 입력해 주세요", disabled=is_closed)
 
 if name.strip():
@@ -242,18 +635,18 @@ if name.strip():
 
 all_options  = published_df["option_label"].tolist()
 blank_option = "— 일정 선택 —"
+skip_option  = "— 선택 안함 —"
 
 with st.form("application_form"):
     c1, c2, c3 = st.columns(3)
     with c1:
-        rank1 = st.selectbox("1순위", [blank_option] + all_options, disabled=is_closed)
-    skip_option = "— 선택 안함 —"
+        rank1 = st.selectbox("🥇 1순위", [blank_option] + all_options, disabled=is_closed)
     with c2:
-        rank2 = st.selectbox("2순위 (선택)", [skip_option] + [o for o in all_options if o != rank1], disabled=is_closed)
+        rank2 = st.selectbox("🥈 2순위 (선택)", [skip_option] + [o for o in all_options if o != rank1], disabled=is_closed)
     with c3:
-        rank3 = st.selectbox("3순위 (선택)", [skip_option] + [o for o in all_options if o not in [rank1, rank2]], disabled=is_closed)
+        rank3 = st.selectbox("🥉 3순위 (선택)", [skip_option] + [o for o in all_options if o not in [rank1, rank2]], disabled=is_closed)
 
-    submitted = st.form_submit_button("신청서 제출하기", use_container_width=True, disabled=is_closed)
+    submitted = st.form_submit_button("🏌️ 신청서 제출하기", use_container_width=True, disabled=is_closed)
     if submitted:
         clean_name = name.strip()
         errors = []
@@ -267,14 +660,16 @@ with st.form("application_form"):
             label_to_row = {r["option_label"]: r.to_dict() for _, r in published_df.iterrows()}
             selected_rows = [{"priority":"1순위", **label_to_row[rank1]}]
             if rank2 != skip_option:
-                selected_rows.append({"priority":"2순위", **label_to_row[rank2]})  
+                selected_rows.append({"priority":"2순위", **label_to_row[rank2]})
             if rank3 != skip_option:
                 selected_rows.append({"priority":"3순위", **label_to_row[rank3]})
-    
+
             delete_existing_submission(clean_name, current_month)
             save_submission(clean_name, current_month, selected_rows)
-            st.success(f"🎊 **{clean_name}**님, 신청이 완료되었습니다. 결과를 기다려 주세요!")
+            st.success(f"🎊 **{clean_name}**님, 신청이 완료되었습니다! 결과를 기다려 주세요 🌿")
             st.balloons()
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════
