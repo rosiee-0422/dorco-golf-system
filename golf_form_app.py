@@ -426,6 +426,7 @@ hr, [data-testid="stDivider"] {
   margin: 24px 0 !important;
 }
 </style>
+""", unsafe_allow_html=True)      
 
 # ═══════════════════════════════════════════
 # 4. 데이터 함수
