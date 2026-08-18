@@ -10,7 +10,7 @@ from supabase import create_client, Client
 # ═══════════════════════════════════════════
 st.set_page_config(
     page_title="라운딩 신청",
-    page_icon="⛳",
+    page_icon="🍁",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
@@ -93,7 +93,7 @@ div[data-testid="stToolbar"] { display: none !important; }
   border-radius: 50%;
 }
 .golf-hero::after {
-  content: '⛳';
+  content: '🍁';
   position: absolute;
   right: 28px; bottom: 18px;
   font-size: 56px;
@@ -548,7 +548,7 @@ is_closed        = datetime.now() > deadline_dt.replace(tzinfo=None)
 st.markdown("""
 <div class="golf-hero">
   <div class="eyebrow">Rounding Application</div>
-  <h1>9월 DORCO 라운딩 신청 컨시어지</h1>
+  <h1>9월 라운딩 신청 <span class=".golf">⛳</span></h1>
   <p class="sub">Golf Schedule Reservation Dorco</p>
 </div>
 """, unsafe_allow_html=True)
