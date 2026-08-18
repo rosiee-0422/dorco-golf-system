@@ -34,55 +34,49 @@ def get_supabase() -> Client:
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
-
 :root {
-  --bg:        #f0f4f0;
-  --surface:   #ffffff;
-  --surface2:  #f7faf7;
-  --green:     #5a8a6a;
-  --green-d:   #3d6b50;
-  --green-l:   #e8f2ec;
-  --mint:      #a8d5ba;
-  --sage:      #c5dbc9;
-  --peach:     #f5c6a0;
-  --peach-l:   #fef0e6;
-  --yellow:    #f7e07a;
-  --yellow-l:  #fdf8dc;
-  --text:      #2c3e35;
-  --sub:       #6b7f72;
-  --hint:      #a0b0a5;
-  --border:    #dceadf;
-  --shadow:    0 2px 16px rgba(90,138,106,.10);
-  --shadow-md: 0 6px 28px rgba(90,138,106,.14);
-  --danger:    #c0615a;
-  --danger-l:  #fdecea;
-  --success:   #4a8c62;
-  --success-l: #e8f4ed;
-  --radius:    18px;
+  --bg: #f7f1e8;
+  --surface: #ffffff;
+  --surface2: #faf6f0;
+  --green: #c17a4a;          /* 테라코타 / 번트 오렌지 */
+  --green-d: #8b4f2a;        /* 딥 러셋 */
+  --green-l: #f5e6d8;        /* 따뜻한 피치 크림 */
+  --mint: #e8b86d;           /* 골든 앰버 */
+  --sage: #d4c4a8;           /* 웜 토프 */
+  --peach: #e8a07a;
+  --peach-l: #fef0e6;
+  --yellow: #e8c86a;
+  --yellow-l: #fdf6dc;
+  --text: #3a2e24;
+  --sub: #7a6a58;
+  --hint: #a89880;
+  --border: #e8ddd0;
+  --shadow: 0 2px 16px rgba(139,79,42,.10);
+  --shadow-md: 0 6px 28px rgba(139,79,42,.14);
+  --danger: #c0615a;
+  --danger-l: #fdecea;
+  --success: #7a9a5a;        /* 뮤티드 올리브 */
+  --success-l: #f0f4e8;
+  --radius: 18px;
   --radius-sm: 12px;
 }
-
 *, *::before, *::after { box-sizing: border-box; }
-
 html, body, [data-testid="stApp"], .stApp {
   font-family: 'Noto Sans KR', 'Nunito', sans-serif !important;
   background: var(--bg) !important;
   color: var(--text) !important;
 }
-
 header[data-testid="stHeader"],
 div[data-testid="stDecoration"],
 div[data-testid="stToolbar"] { display: none !important; }
-
 .block-container {
   padding-top: 2rem !important;
   padding-bottom: 4rem !important;
   max-width: 740px !important;
 }
-
 /* ── 히어로 카드 ── */
 .golf-hero {
-  background: linear-gradient(135deg, #5a8a6a 0%, #3d6b50 60%, #2d5540 100%);
+  background: linear-gradient(135deg, #c17a4a 0%, #8b4f2a 60%, #5c3317 100%);
   border-radius: var(--radius);
   padding: 40px 36px 34px;
   margin-bottom: 24px;
@@ -133,7 +127,6 @@ div[data-testid="stToolbar"] { display: none !important; }
   margin: 0;
   font-weight: 300;
 }
-
 /* ── 마감 카드 ── */
 .deadline-card {
   background: var(--surface);
@@ -182,7 +175,6 @@ div[data-testid="stToolbar"] { display: none !important; }
   border-radius: 100px;
   white-space: nowrap;
 }
-
 /* ── 섹션 헤딩 ── */
 .sec-heading {
   display: flex;
@@ -206,7 +198,6 @@ div[data-testid="stToolbar"] { display: none !important; }
   color: var(--text);
   letter-spacing: -.01em;
 }
-
 /* ── 일정 카드 그리드 ── */
 .schedule-grid {
   display: grid;
@@ -242,7 +233,7 @@ div[data-testid="stToolbar"] { display: none !important; }
 .sched-card .sc-club {
   display: inline-block;
   background: var(--yellow-l);
-  color: #7a6820;
+  color: #7a5c20;
   border-radius: 8px;
   padding: 3px 10px;
   font-size: 11px;
@@ -254,7 +245,6 @@ div[data-testid="stToolbar"] { display: none !important; }
   color: var(--hint);
   margin-top: 2px;
 }
-
 /* ── 폼 카드 래퍼 ── */
 .form-card {
   background: var(--surface);
@@ -264,7 +254,6 @@ div[data-testid="stToolbar"] { display: none !important; }
   box-shadow: var(--shadow);
   margin-bottom: 8px;
 }
-
 /* ── 닫힌 배너 ── */
 .closed-banner {
   background: var(--danger-l);
@@ -276,7 +265,6 @@ div[data-testid="stToolbar"] { display: none !important; }
   font-weight: 600;
   margin-bottom: 20px;
 }
-
 /* ── Streamlit 위젯 오버라이드 ── */
 [data-testid="stTextInput"] input,
 [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
@@ -292,7 +280,7 @@ div[data-testid="stToolbar"] { display: none !important; }
 [data-testid="stTextInput"] input:focus,
 [data-testid="stSelectbox"] div[data-baseweb="select"] > div:focus {
   border-color: var(--mint) !important;
-  box-shadow: 0 0 0 3px rgba(168,213,186,.25) !important;
+  box-shadow: 0 0 0 3px rgba(232,184,109,.30) !important;
 }
 [data-testid="stTextInput"] label,
 [data-testid="stSelectbox"] label,
@@ -303,7 +291,6 @@ div[data-testid="stToolbar"] { display: none !important; }
   text-transform: uppercase !important;
   color: var(--sub) !important;
 }
-
 /* ── 버튼 ── */
 .stButton > button {
   border-radius: 10px !important;
@@ -329,14 +316,13 @@ div[data-testid="stToolbar"] { display: none !important; }
   font-size: 15px !important;
   height: 52px !important;
   border-radius: 14px !important;
-  box-shadow: 0 4px 16px rgba(90,138,106,.30) !important;
+  box-shadow: 0 4px 16px rgba(139,79,42,.30) !important;
   transition: all .15s !important;
 }
 [data-testid="stFormSubmitButton"] button:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(90,138,106,.38) !important;
+  box-shadow: 0 8px 24px rgba(139,79,42,.38) !important;
 }
-
 /* ── 알림 ── */
 [data-testid="stSuccess"] {
   background: var(--success-l) !important;
@@ -362,7 +348,6 @@ div[data-testid="stToolbar"] { display: none !important; }
   border-radius: 12px !important;
   color: var(--green-d) !important;
 }
-
 /* ── 데이터프레임 ── */
 [data-testid="stDataFrame"] {
   border: 1.5px solid var(--border) !important;
@@ -383,7 +368,6 @@ div[data-testid="stToolbar"] { display: none !important; }
   font-size: 13px !important;
   border-bottom: 1px solid var(--border) !important;
 }
-
 /* ── 탭 ── */
 [data-testid="stTabs"] [role="tablist"] {
   background: var(--surface) !important;
@@ -405,9 +389,8 @@ div[data-testid="stToolbar"] { display: none !important; }
 [data-testid="stTabs"] [role="tab"][aria-selected="true"] {
   background: var(--green-l) !important;
   color: var(--green-d) !important;
-  box-shadow: 0 1px 6px rgba(90,138,106,.15) !important;
+  box-shadow: 0 1px 6px rgba(139,79,42,.15) !important;
 }
-
 /* ── 익스팬더 (관리자) ── */
 [data-testid="stExpander"] {
   border: 1.5px solid var(--border) !important;
@@ -423,7 +406,6 @@ div[data-testid="stToolbar"] { display: none !important; }
   color: var(--hint) !important;
   padding: 14px 20px !important;
 }
-
 /* ── 체크박스, 다운로드 버튼 ── */
 [data-testid="stCheckbox"] label { color: var(--sub) !important; font-size: 13px !important; }
 [data-testid="stDownloadButton"] button {
@@ -439,14 +421,11 @@ div[data-testid="stToolbar"] { display: none !important; }
   background: var(--mint) !important;
   color: #fff !important;
 }
-
 hr, [data-testid="stDivider"] {
   border-color: var(--border) !important;
   margin: 24px 0 !important;
 }
 </style>
-""", unsafe_allow_html=True)
-
 
 # ═══════════════════════════════════════════
 # 4. 데이터 함수
@@ -568,7 +547,7 @@ is_closed        = datetime.now() > deadline_dt.replace(tzinfo=None)
 st.markdown("""
 <div class="golf-hero">
   <div class="eyebrow">Rounding Application</div>
-  <h1>라운딩 신청<br>컨시어지 🌿</h1>
+  <h1>라운딩 신청<br>컨시어지 🍂</h1>
   <p class="sub">Golf Schedule Reservation · Dorco</p>
 </div>
 """, unsafe_allow_html=True)
