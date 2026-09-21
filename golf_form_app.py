@@ -138,6 +138,7 @@ div[data-testid="stToolbar"] { display: none !important; }
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  flex-wrap: wrap;
   box-shadow: var(--shadow);
 }
 .deadline-card .dl-label {
@@ -174,6 +175,18 @@ div[data-testid="stToolbar"] { display: none !important; }
   padding: 7px 18px;
   border-radius: 100px;
   white-space: nowrap;
+}
+.badge-target {
+  display: inline-block;
+  background: var(--yellow-l);
+  color: #7a5c20;
+  border: 1.5px solid #e8d060;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 18px;
+  border-radius: 100px;
+  white-space: nowrap;
+  margin-left: 8px;
 }
 /* ── 섹션 헤딩 ── */
 .sec-heading {
@@ -426,7 +439,7 @@ hr, [data-testid="stDivider"] {
   margin: 24px 0 !important;
 }
 </style>
-""", unsafe_allow_html=True)      
+""", unsafe_allow_html=True)
 
 # ═══════════════════════════════════════════
 # 4. 데이터 함수
@@ -476,6 +489,22 @@ def update_deadline(new_date, new_time):
         on_conflict="key"
     ).execute()
     return new_dt
+
+def get_target_grade() -> str:
+    """현재 접수 대상 직급 설정을 불러온다. 기본값은 '전체'."""
+    sb = get_supabase()
+    res = sb.table("settings").select("value").eq("key", "target_grade").execute()
+    if not res.data:
+        return "전체"
+    val = str(res.data[0]["value"]).strip()
+    return val if val else "전체"
+
+def update_target_grade(new_target: str):
+    sb = get_supabase()
+    sb.table("settings").upsert(
+        {"key": "target_grade", "value": new_target},
+        on_conflict="key"
+    ).execute()
 
 def load_submissions() -> pd.DataFrame:
     sb = get_supabase()
@@ -533,6 +562,7 @@ COURSE_MAP = {
     "플라자CC":   ["타이거코스(OUT)", "타이거코스(IN)", "라이온코스(OUT)", "라이온코스(IN)"],
 }
 GOLF_LIST = list(COURSE_MAP.keys())
+TARGET_GRADE_OPTIONS = ["전체", "책임급", "선임급"]
 
 
 # ═══════════════════════════════════════════
@@ -543,6 +573,7 @@ published_df     = full_schedule_df[full_schedule_df["status"] == "published"].r
 current_month    = published_df["month"].iloc[0] if not published_df.empty else "이번 달"
 deadline_dt      = get_deadline()
 is_closed        = datetime.now() > deadline_dt.replace(tzinfo=None)
+target_grade     = get_target_grade()
 
 # ── 히어로 ──
 st.markdown("""
@@ -557,13 +588,18 @@ st.markdown("""
 dl_str    = deadline_dt.strftime("%Y년 %m월 %d일")
 badge_cls = "badge-closed" if is_closed else "badge-open"
 badge_txt = "⏰ 신청 마감" if is_closed else "✅ 신청 가능"
+target_badge_html = ""
+if target_grade in ("책임급", "선임급"):
+    target_badge_html = f'<span class="badge-target">🎯 {target_grade} 신청중</span>'
 st.markdown(f"""
 <div class="deadline-card">
   <div>
     <div class="dl-label">신청 마감 일시</div>
     <div class="dl-date">{dl_str}</div>
   </div>
-  <div class="{badge_cls}">{badge_txt}</div>
+  <div>
+    <span class="{badge_cls}">{badge_txt}</span>{target_badge_html}
+  </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -673,8 +709,8 @@ with st.expander("🔐 관리자 시스템"):
                 st.session_state.admin_auth = False
                 st.rerun()
 
-        tab_status, tab_sched, tab_deadline, tab_reset = st.tabs([
-            "📋 접수 현황", "🗂️ 스케줄 관리", "⏰ 마감 조정", "🗑️ 데이터 초기화"
+        tab_status, tab_sched, tab_target, tab_deadline, tab_reset = st.tabs([
+            "📋 접수 현황", "🗂️ 스케줄 관리", "🎯 접수 대상", "⏰ 마감 조정", "🗑️ 데이터 초기화"
         ])
 
         # ── 탭 1: 접수 현황 ──
@@ -846,7 +882,25 @@ with st.expander("🔐 관리자 시스템"):
                         st.success("삭제되었습니다.")
                         st.rerun()
 
-        # ── 탭 3: 마감 조정 ──
+        # ── 탭 3: 접수 대상 (책임급/선임급) ──
+        with tab_target:
+            st.markdown("**현재 접수 대상 표시**")
+            st.caption("메인 화면 마감 카드에 '🎯 OO급 신청중' 배지로 표시됩니다. '전체'로 두면 배지가 표시되지 않습니다.")
+            current_target = get_target_grade()
+            target_idx = TARGET_GRADE_OPTIONS.index(current_target) if current_target in TARGET_GRADE_OPTIONS else 0
+            new_target_sel = st.radio(
+                "접수 대상",
+                TARGET_GRADE_OPTIONS,
+                index=target_idx,
+                horizontal=True,
+                key="target_grade_radio"
+            )
+            if st.button("접수 대상 저장", use_container_width=True, key="save_target"):
+                update_target_grade(new_target_sel)
+                st.toast(f"접수 대상이 '{new_target_sel}'(으)로 업데이트되었습니다.")
+                st.rerun()
+
+        # ── 탭 4: 마감 조정 ──
         with tab_deadline:
             st.markdown("**마감 기한 변경**")
             dl_c1, dl_c2 = st.columns(2)
@@ -857,7 +911,7 @@ with st.expander("🔐 관리자 시스템"):
                 st.toast("마감 기한이 업데이트되었습니다.")
                 st.rerun()
 
-        # ── 탭 4: 데이터 초기화 ──
+        # ── 탭 5: 데이터 초기화 ──
         with tab_reset:
             st.warning("⚠️ 이 작업은 되돌릴 수 없습니다. 모든 제출 데이터가 삭제됩니다.")
             confirm = st.checkbox("삭제에 동의하며, 제출 데이터를 초기화합니다.", key="reset_confirm")
