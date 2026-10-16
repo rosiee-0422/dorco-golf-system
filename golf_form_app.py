@@ -579,7 +579,7 @@ target_grade     = get_target_grade()
 st.markdown("""
 <div class="golf-hero">
   <div class="eyebrow">Rounding Application</div>
-  <h1>9월 라운딩 신청 <span class=".golf">⛳</span></h1>
+  <h1>11월 라운딩 신청 <span class=".golf">⛳</span></h1>
   <p class="sub">Golf Schedule Reservation Dorco</p>
 </div>
 """, unsafe_allow_html=True)
